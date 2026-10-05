@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>چرخه نیتروژن و پلیمرها</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:Tahoma,sans-serif; -webkit-tap-highlight-color:transparent; }
+  body { min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
+         background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); padding:20px;
+         padding-bottom: 80px; }
+  .container { background:#fff; padding:40px 35px; border-radius:15px;
+               box-shadow:0 15px 40px rgba(0,0,0,0.5); width:900px; max-width:100%; }
+
+  /* ==================== نوار تب ==================== */
+  .user-nav {
+    display: flex; gap: 8px; margin-bottom: 20px;
+    background: #f3f4f6; padding: 6px; border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  .user-nav button {
+    flex: 1; min-width: 140px; padding: 12px 16px;
+    background: transparent; border: none; border-radius: 8px;
+    font-size: 15px; font-weight: bold; cursor: pointer;
+    color: #4b5563; transition: 0.2s;
+    font-family: inherit;
+  }
+  .user-nav button:hover { background: #e5e7eb; }
+  .user-nav button.active {
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    color: #fff; box-shadow: 0 4px 12px rgba(30,60,114,0.3);
+  }
+
+  /* ==================== چرخه نیتروژن ==================== */
+  .cycle-wrapper { display:flex; flex-direction:column; width:100%; gap:15px; }
+  .cycle-wrapper .subtitle {
+    color:#64748b; margin-bottom:8px; font-size:0.9rem; text-align:center;
+  }
+  .canvas-container {
+    position: relative; width: 100%; aspect-ratio: 16 / 10;
+    border-radius: 15px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 3px solid #334155; background: #1e293b;
+  }
+  #scene { display: block; width: 100%; height: 100%; cursor: pointer; }
+  .cycle-ui-panel {
+    background: #0f172a; border: 2px solid #4ade80;
+    border-radius: 12px; padding: 15px; min-height: 120px;
+    color: #fff;
+  }
+  .cycle-ui-panel h2 { margin: 0 0 8px 0; font-size: 1.05rem; color: #4ade80; text-align:right; }
+  .cycle-ui-panel p {
+    margin: 0; font-size: 0.9rem; line-height: 1.9;
+    color: #cbd5e1; text-align: justify;
+  }
+  .cycle-controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .cycle-controls button {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    padding: 11px 22px; font-size: 0.95rem; font-weight: bold;
+    cursor: pointer; border: none; border-radius: 10px;
+    background-color: #4ade80; color: #0f172a;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.4);
+    flex: 1; min-width: 130px; max-width: 200px;
+  }
+  .cycle-controls button:hover { background-color: #22c55e; transform: translateY(-2px); }
+  .cycle-controls button:disabled { background-color: #64748b; box-shadow: none; cursor: not-allowed; transform: none; }
+  .cycle-legend {
+    display: flex; gap: 15px; justify-content: center;
+    font-size: 0.8rem; color: #64748b; margin-top: 5px;
+  }
+  .cycle-legend .legend-item { display: flex; align-items: center; gap: 5px; }
+  .cycle-legend .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ==================== صفحه پلیمرها ==================== */
+  .polymer-wrapper { display: flex; flex-direction: column; gap: 18px; }
+
+  .polymer-card {
+    background: #f7f9fc; border-radius: 14px; padding: 18px 20px;
+    border-right: 6px solid #2a5298; transition: 0.25s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  }
+  .polymer-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .polymer-card.pet { border-right-color: #3498db; }
+  .polymer-card.hdpe { border-right-color: #e74c3c; }
+  .polymer-card.pvc { border-right-color: #f39c12; }
+  .polymer-card.ldpe { border-right-color: #e91e63; }
+  .polymer-card.pp { border-right-color: #9b59b6; }
+  .polymer-card.ps { border-right-color: #16a085; }
+  .polymer-card.other { border-right-color: #7f8c8d; }
+
+  .polymer-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .polymer-num {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: bold; color: #fff;
+    flex-shrink: 0;
+  }
+  .polymer-card.pet .polymer-num { background: #3498db; }
+  .polymer-card.hdpe .polymer-num { background: #e74c3c; }
+  .polymer-card.pvc .polymer-num { background: #f39c12; }
+  .polymer-card.ldpe .polymer-num { background: #e91e63; }
+  .polymer-card.pp .polymer-num { background: #9b59b6; }
+  .polymer-card.ps .polymer-num { background: #16a085; }
+  .polymer-card.other .polymer-num { background: #7f8c8d; }
+
+  .polymer-title {
+    font-size: 17px; font-weight: bold; color: #1e3c72;
+  }
+  .polymer-code {
+    font-family: monospace; font-size: 13px; color: #666;
+    margin-top: 2px;
+  }
+
+  .polymer-section {
+    margin-top: 10px; padding-right: 8px;
+    border-right: 3px solid #e5e7eb;
+  }
+  .polymer-section-title {
+    font-size: 13px; font-weight: bold; color: #2a5298;
+    margin-bottom: 4px;
+  }
+  .polymer-section-text {
+    font-size: 13.5px; color: #4b5563; line-height: 1.9;
+    text-align: justify;
+  }
+
+  @media (max-width: 480px) {
+    .cycle-ui-panel p { font-size: 0.82rem; line-height: 1.7; }
+    .polymer-card { padding: 14px 15px; }
+    .polymer-title { font-size: 15px; }
+    .polymer-section-text { font-size: 12.5px; }
+    .user-nav button { font-size: 13px; padding: 10px 10px; min-width: 100px; }
+    .container { padding: 20px 15px; }
+  }
+
+  /* ==================== فوتر سازنده ==================== */
+  .creator-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 12px 20px;
+    background: rgba(15, 32, 39, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 13px;
+    font-family: Tahoma, sans-serif;
+    border-top: 2px solid rgba(124, 58, 237, 0.4);
+    z-index: 9998;
+    direction: rtl;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+  .creator-footer .label {
+    opacity: 0.8;
+    margin: 0 4px;
+  }
+  .creator-footer .name {
+    font-weight: bold;
+    background: linear-gradient(135deg, #a78bfa, #7c3aed, #4f46e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 15px;
+    margin: 0 4px;
+    letter-spacing: 0.5px;
+    animation: creatorGlow 2s ease-in-out infinite;
+  }
+  @keyframes creatorGlow {
+    0%, 100% { filter: drop-shadow(0 0 3px rgba(167, 139, 250, 0.4)); }
+    50% { filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.9)); }
+  }
+
+  @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+    .creator-footer {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: #0f2027 !important;
+    }
+    .creator-footer .name {
+      animation: none !important;
+      filter: none !important;
+      -webkit-filter: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="mainPage">
+  <!-- نوار تب -->
+  <div class="user-nav">
+    <button class="active" data-tab="cycle" onclick="switchTab('cycle')">🌍 چرخه نیتروژن</button>
+    <button data-tab="polymer" onclick="switchTab('polymer')">♻️ پلیمرها</button>
+  </div>
+
+  <!-- ============ تب چرخه نیتروژن ============ -->
+  <div id="tab-cycle">
+    <div class="cycle-wrapper">
+      <p class="subtitle">روی اجزای صحنه کلیک کنید تا متن کتاب را ببینید</p>
+
+      <div class="canvas-container">
+        <canvas id="scene"></canvas>
+      </div>
+
+      <div class="cycle-ui-panel" id="info-panel">
+        <h2 id="info-title">راهنما</h2>
+        <p id="info-text">روی دکمه «شروع چرخه» کلیک کنید تا ذرات نیتروژن شروع به حرکت کنند. همچنین می‌توانید روی بخش‌های مختلف صحنه (ابر، خاک، گیاه، گوسفند، باکتری) کلیک کنید تا متن دقیق کتاب درسی برایتان نمایش داده شود.</p>
+      </div>
+
+      <div class="cycle-controls">
+        <button id="play-btn" onclick="startAnimation()">▶ شروع چرخه</button>
+        <button onclick="resetScene()">🔄 ریست</button>
+      </div>
+
+      <div class="cycle-legend">
+        <div class="legend-item"><div class="dot" style="background:#60a5fa;"></div> نیتروژن (N)</div>
+        <div class="legend-item"><div class="dot" style="background:#fbbf24;"></div> باکتری</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ تب پلیمرها ============ -->
+  <div id="tab-polymer" class="hidden">
+    <div class="polymer-wrapper">
+
+      <div class="polymer-card pet">
+        <div class="polymer-header">
+          <div class="polymer-num">۱</div>
+          <div>
+            <div class="polymer-title">پلی‌اتیلن ترفتالات (PET)</div>
+            <div class="polymer-code">Polyethylene Terephthalate</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">شفاف، محکم و جلوگیری‌کننده از نفوذ گازها</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">بطری‌های آب معدنی، نوشابه و ظروف حاوی نوشیدنی</div>
+        </div>
+      </div>
+
+      <div class="polymer-card hdpe">
+        <div class="polymer-header">
+          <div class="polymer-num">۲</div>
+          <div>
+            <div class="polymer-title">پلی‌اتیلن با چگالی بالا (HDPE)</div>
+            <div class="polymer-code">High-Density Polyethylene</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">سخت، مقاومت و مقاومت بالا در برابر ضربه و شیمیایی</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">بطری‌های شیر، ظروف مواد شوینده، شامپو و لوله‌های پلاستیکی</div>
+        </div>
+      </div>
+
+      <div class="polymer-card pvc">
+        <div class="polymer-header">
+          <div class="polymer-num">۳</div>
+          <div>
+            <div class="polymer-title">پلی‌وینیل کلراید (PVC)</div>
+            <div class="polymer-code">Polyvinyl Chloride</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">بسیار محکم، محکم و مقاوم در برابر شرایط آب و هوایی (از نظر نفوذ آب)</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">لوله‌های آب و فاضلاب، روکش سیم‌ها و کابل‌های برق، شلنگ‌ها</div>
+        </div>
+      </div>
+
+      <div class="polymer-card ldpe">
+        <div class="polymer-header">
+          <div class="polymer-num">۴</div>
+          <div>
+            <div class="polymer-title">پلی‌اتیلن با چگالی پایین (LDPE)</div>
+            <div class="polymer-code">Low-Density Polyethylene</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">انعطاف‌پذیر و نرم</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">کیسه‌های خرید، پلاستیک سفره و روکش‌های نازک بسته‌بندی</div>
+        </div>
+      </div>
+
+      <div class="polymer-card pp">
+        <div class="polymer-header">
+          <div class="polymer-num">۵</div>
+          <div>
+            <div class="polymer-title">پلی‌پروپیلن (PP)</div>
+            <div class="polymer-code">Polypropylene</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">مقاومت بسیار خوب در برابر گرما و رطوبت</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">ظروف ماست، نوشیدنی، درب بطریقه‌ها و ظروف بسته‌بندی</div>
+        </div>
+      </div>
+
+      <div class="polymer-card ps">
+        <div class="polymer-header">
+          <div class="polymer-num">۶</div>
+          <div>
+            <div class="polymer-title">پلی‌استایرن (PS)</div>
+            <div class="polymer-code">Polystyrene</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">سبک، شکننده و عایق جرارت</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">لیوان‌ها و ظروف یکبار مصرف، ضربه‌های نجات‌بخش و ظروف فومی</div>
+        </div>
+      </div>
+
+      <div class="polymer-card other">
+        <div class="polymer-header">
+          <div class="polymer-num">۷</div>
+          <div>
+            <div class="polymer-title">سایر پلاستیک‌ها (Other)</div>
+            <div class="polymer-code">Other Plastics</div>
+          </div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">ویژگی‌ها</div>
+          <div class="polymer-section-text">پلاستیک‌های با ترکیبی یا خاص که بازیافت آن‌ها در طبیعت بسیار سخت و پیچیده است.</div>
+        </div>
+        <div class="polymer-section">
+          <div class="polymer-section-title">کاربرد</div>
+          <div class="polymer-section-text">قطعات داخلی خودرو، شیره ضدرور، عایق‌های ایمنی و لوله‌های مقاوم (CD)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ فوتر سازنده ============ -->
+<footer class="creator-footer">
+  <span class="label">✨ طراحی و توسعه توسط</span>
+  <span class="name">ایلیا خداپناه</span>
+  <span class="label">💻</span>
+</footer>
+
+<script>
+/* ==================== نوار تب ==================== */
+function switchTab(tabName) {
+  document.querySelectorAll('.user-nav button').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.querySelector(`.user-nav button[data-tab="${tabName}"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  ['cycle','polymer'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.classList.toggle('hidden', t !== tabName);
+  });
+
+  if (tabName === 'cycle') {
+    setTimeout(() => {
+      resizeCycleCanvas();
+      if (!cycleAnimId) animateCycle();
+    }, 50);
+  } else {
+    isPlaying = false;
+    const btn = document.getElementById('play-btn');
+    if (btn) btn.disabled = false;
+  }
+}
+
+/* ============================================================
+   🌍 چرخه نیتروژن
+   ============================================================ */
+const cycleCanvas = document.getElementById('scene');
+const cycleCtx = cycleCanvas.getContext('2d');
+
+let cWidth, cHeight, scaleFactor;
+let positions = {};
+
+function resizeCycleCanvas() {
+    const cycleTab = document.getElementById('tab-cycle');
+    if (!cycleTab || cycleTab.classList.contains('hidden')) return;
+
+    const container = cycleCanvas.parentElement;
+    const rect = container.getBoundingClientRect();
+    if (rect.width === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+
+    cycleCanvas.width = rect.width * dpr;
+    cycleCanvas.height = rect.height * dpr;
+
+    cycleCtx.setTransform(1, 0, 0, 1, 0, 0);
+    cycleCtx.scale(dpr, dpr);
+
+    cWidth = rect.width;
+    cHeight = rect.height;
+    scaleFactor = cWidth / 800;
+
+    updatePositions();
+}
+
+function updatePositions() {
+    positions = {
+        cloud:    { x: cWidth * 0.5,  y: cHeight * 0.15 },
+        soil:     { x: cWidth * 0.5,  y: cHeight * 0.7  },
+        plant:    { x: cWidth * 0.75, y: cHeight * 0.7  },
+        animal:   { x: cWidth * 0.5,  y: cHeight * 0.5  },
+        bacteria: { x: cWidth * 0.25, y: cHeight * 0.75 }
+    };
+}
+
+const infoData = {
+    lightning: { title:"⚡ رعد و برق", text:"مقداری نیتروژن در اثر رعد و برق صاعقه به اسید نیتریک تبدیل می‌شود که در خاک به نیترات تبدیل شده و وارد چرخه می‌شود." },
+    soil: { title:"🟫 خاک و چرخه کلی", text:"نیتروژن هوا توسط گیاهان جذب می‌شود و به مواد آلی نیتروژن‌دار (پروتئین‌ها) تبدیل می‌گردد. این مواد آلی دارای نیتروژن گیاهی توسط گیاهخواران جذب شده و سپس با مرگ گیاهان و گیاهخواران و تجزیه شدن آن‌ها در طول زمان توسط باکتری‌های خاک به آمونیاک تبدیل می‌شود. این آمونیاک توسط باکتری‌ها یا به نیترات در خاک تبدیل می‌شود که مجدداً توسط گیاهان مورد استفاده قرار می‌گیرد، یا به نیتروژن تبدیل می‌شود و به هوا باز می‌گردد. مقداری نیتروژن در اثر رعد و برق صاعقه به اسید نیتریک تبدیل می‌شود که در خاک به نیترات تبدیل شده و وارد چرخه می‌شود." },
+    plant: { title:"🌿 گیاهان", text:"نیتروژن هوا توسط گیاهان جذب می‌شود و به مواد آلی نیتروژن‌دار (پروتئین‌ها) تبدیل می‌گردد." },
+    animal: { title:"🐑 گیاهخواران", text:"این مواد آلی دارای نیتروژن گیاهی توسط گیاهخواران جذب شده و سپس با مرگ گیاهان و گیاهخواران و تجزیه شدن آن‌ها در طول زمان توسط باکتری‌های خاک به آمونیاک تبدیل می‌شود." },
+    bacteria: { title:"🦠 باکتری‌های خاک", text:"با مرگ گیاهان و گیاهخواران و تجزیه شدن آن‌ها در طول زمان توسط باکتری‌های خاک به آمونیاک تبدیل می‌شود. این آمونیاک توسط باکتری‌ها یا به نیترات در خاک تبدیل می‌شود که مجدداً توسط گیاهان مورد استفاده قرار می‌گیرد، یا به نیتروژن تبدیل می‌شود و به هوا باز می‌گردد." }
+};
+
+let isPlaying = false;
+let cycleAnimId = null;
+let particles = [];
+let frame = 0;
+
+class Particle {
+    constructor() { this.reset(); }
+    reset() {
+        this.x=0; this.y=0; this.targetX=0; this.targetY=0;
+        this.speed = 0.02 + Math.random() * 0.02;
+        this.stage = 0;
+        this.visible = false;
+        this.size = 3 + Math.random() * 3;
+        this.alpha = 1;
+    }
+    update() {
+        if (!this.visible) return;
+        this.x += (this.targetX - this.x) * this.speed;
+        this.y += (this.targetY - this.y) * this.speed;
+        const dist = Math.sqrt((this.x-this.targetX)**2 + (this.y-this.targetY)**2);
+        if (dist < 5) {
+            this.stage++;
+            if (this.stage > 5) this.stage = 0;
+            this.setTarget();
+        }
+    }
+    setTarget() {
+        switch(this.stage) {
+            case 0:
+                this.x = positions.cloud.x + (Math.random()-0.5)*80*scaleFactor;
+                this.y = positions.cloud.y + (Math.random()-0.5)*30*scaleFactor;
+                this.targetX = positions.soil.x + (Math.random()-0.5)*50*scaleFactor;
+                this.targetY = positions.soil.y - 20*scaleFactor;
+                this.visible = true;
+                break;
+            case 1:
+                this.targetX = positions.plant.x - 40*scaleFactor;
+                this.targetY = positions.plant.y - 20*scaleFactor;
+                break;
+            case 2:
+                this.targetX = positions.animal.x - 20*scaleFactor;
+                this.targetY = positions.animal.y;
+                break;
+            case 3:
+                this.targetX = positions.bacteria.x + 20*scaleFactor;
+                this.targetY = positions.bacteria.y;
+                break;
+            case 4:
+                this.targetX = positions.soil.x + (Math.random()-0.5)*50*scaleFactor;
+                this.targetY = positions.soil.y;
+                break;
+            case 5:
+                this.targetX = positions.cloud.x + (Math.random()-0.5)*80*scaleFactor;
+                this.targetY = positions.cloud.y;
+                break;
+        }
+    }
+    draw() {
+        if (!this.visible) return;
+        const s = this.size * scaleFactor;
+        cycleCtx.beginPath();
+        cycleCtx.arc(this.x, this.y, s, 0, Math.PI*2);
+        cycleCtx.fillStyle = '#60a5fa';
+        cycleCtx.globalAlpha = this.alpha;
+        cycleCtx.fill();
+        cycleCtx.globalAlpha = 1;
+        cycleCtx.beginPath();
+        cycleCtx.arc(this.x, this.y, s*2, 0, Math.PI*2);
+        cycleCtx.fillStyle = 'rgba(96, 165, 250, 0.2)';
+        cycleCtx.fill();
+    }
+}
+
+function drawBackground() {
+    const skyGradient = cycleCtx.createLinearGradient(0, 0, 0, cHeight);
+    skyGradient.addColorStop(0, '#0f172a');
+    skyGradient.addColorStop(0.6, '#1e293b');
+    skyGradient.addColorStop(1, '#334155');
+    cycleCtx.fillStyle = skyGradient;
+    cycleCtx.fillRect(0, 0, cWidth, cHeight);
+
+    cycleCtx.beginPath();
+    cycleCtx.arc(cWidth*0.15, cHeight*0.15, 30*scaleFactor, 0, Math.PI*2);
+    cycleCtx.fillStyle = 'rgba(250, 204, 21, 0.8)';
+    cycleCtx.shadowColor = '#facc15';
+    cycleCtx.shadowBlur = 30*scaleFactor;
+    cycleCtx.fill();
+    cycleCtx.shadowBlur = 0;
+
+    const cx = positions.cloud.x, cy = positions.cloud.y, cs = 40*scaleFactor;
+    cycleCtx.fillStyle = '#64748b';
+    cycleCtx.beginPath();
+    cycleCtx.arc(cx, cy, cs, 0, Math.PI*2);
+    cycleCtx.arc(cx-cs, cy+cs*0.25, cs*0.75, 0, Math.PI*2);
+    cycleCtx.arc(cx+cs, cy+cs*0.25, cs*0.85, 0, Math.PI*2);
+    cycleCtx.fill();
+
+    if (isPlaying && frame % 100 < 10) {
+        cycleCtx.strokeStyle = '#facc15';
+        cycleCtx.lineWidth = 3*scaleFactor;
+        cycleCtx.beginPath();
+        cycleCtx.moveTo(cx, cy+cs*0.5);
+        cycleCtx.lineTo(cx-20*scaleFactor, cy+cs*1.5);
+        cycleCtx.lineTo(cx+10*scaleFactor, cy+cs*1.75);
+        cycleCtx.lineTo(cx-10*scaleFactor, cy+cs*3);
+        cycleCtx.stroke();
+    }
+
+    const soilY = cHeight * 0.75;
+    const soilGradient = cycleCtx.createLinearGradient(0, soilY, 0, cHeight);
+    soilGradient.addColorStop(0, '#78350f');
+    soilGradient.addColorStop(1, '#451a03');
+    cycleCtx.fillStyle = soilGradient;
+    cycleCtx.beginPath();
+    cycleCtx.moveTo(0, soilY);
+    cycleCtx.quadraticCurveTo(cWidth/2, soilY-20*scaleFactor, cWidth, soilY);
+    cycleCtx.lineTo(cWidth, cHeight);
+    cycleCtx.lineTo(0, cHeight);
+    cycleCtx.fill();
+
+    cycleCtx.fillStyle = '#22c55e';
+    const grassSpacing = 20*scaleFactor;
+    for(let i=0; i<cWidth; i+=grassSpacing) {
+        let h = (10 + Math.sin(i)*5)*scaleFactor;
+        cycleCtx.fillRect(i, soilY-5*scaleFactor + Math.sin(i)*5*scaleFactor, 3*scaleFactor, h);
+    }
+}
+
+function drawPlant() {
+    const px = positions.plant.x, py = positions.plant.y, s = scaleFactor;
+    cycleCtx.strokeStyle = '#4ade80';
+    cycleCtx.lineWidth = 6*s;
+    cycleCtx.beginPath();
+    cycleCtx.moveTo(px, py+40*s);
+    cycleCtx.quadraticCurveTo(px-10*s, py, px, py-40*s);
+    cycleCtx.stroke();
+    cycleCtx.fillStyle = '#22c55e';
+    cycleCtx.beginPath(); cycleCtx.ellipse(px-15*s, py-10*s, 15*s, 8*s, -0.5, 0, Math.PI*2); cycleCtx.fill();
+    cycleCtx.beginPath(); cycleCtx.ellipse(px+15*s, py-25*s, 15*s, 8*s, 0.5, 0, Math.PI*2); cycleCtx.fill();
+    cycleCtx.beginPath(); cycleCtx.ellipse(px-10*s, py-40*s, 12*s, 6*s, -0.8, 0, Math.PI*2); cycleCtx.fill();
+}
+
+function drawAnimal() {
+    const ax = positions.animal.x, ay = positions.animal.y, s = scaleFactor;
+    cycleCtx.fillStyle = '#f1f5f9';
+    cycleCtx.beginPath(); cycleCtx.ellipse(ax, ay, 35*s, 25*s, 0, 0, Math.PI*2); cycleCtx.fill();
+    cycleCtx.beginPath(); cycleCtx.arc(ax+30*s, ay-15*s, 15*s, 0, Math.PI*2); cycleCtx.fill();
+    cycleCtx.fillStyle = '#334155';
+    cycleCtx.fillRect(ax-20*s, ay+15*s, 6*s, 20*s);
+    cycleCtx.fillRect(ax+10*s, ay+15*s, 6*s, 20*s);
+    cycleCtx.fillStyle = '#000';
+    cycleCtx.beginPath(); cycleCtx.arc(ax+35*s, ay-18*s, 2*s, 0, Math.PI*2); cycleCtx.fill();
+}
+
+function drawBacteria() {
+    const bx = positions.bacteria.x, by = positions.bacteria.y, s = scaleFactor;
+    for(let i=0; i<5; i++) {
+        let offsetX = Math.sin(frame*0.05 + i)*15*s;
+        let offsetY = Math.cos(frame*0.05 + i)*10*s;
+        cycleCtx.beginPath();
+        cycleCtx.arc(bx+offsetX, by+offsetY, 5*s, 0, Math.PI*2);
+        cycleCtx.fillStyle = '#fbbf24';
+        cycleCtx.shadowColor = '#fbbf24';
+        cycleCtx.shadowBlur = 10*s;
+        cycleCtx.fill();
+        cycleCtx.shadowBlur = 0;
+    }
+}
+
+function drawConnections() {
+    const s = scaleFactor;
+    cycleCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    cycleCtx.lineWidth = 2*s;
+    cycleCtx.setLineDash([5*s, 5*s]);
+
+    cycleCtx.beginPath(); cycleCtx.moveTo(positions.cloud.x, positions.cloud.y+40*s); cycleCtx.lineTo(positions.soil.x, positions.soil.y-20*s); cycleCtx.stroke();
+    cycleCtx.beginPath(); cycleCtx.moveTo(positions.soil.x+50*s, positions.soil.y); cycleCtx.lineTo(positions.plant.x-50*s, positions.plant.y); cycleCtx.stroke();
+    cycleCtx.beginPath(); cycleCtx.moveTo(positions.plant.x, positions.plant.y-40*s); cycleCtx.lineTo(positions.animal.x+20*s, positions.animal.y+10*s); cycleCtx.stroke();
+    cycleCtx.beginPath(); cycleCtx.moveTo(positions.animal.x-30*s, positions.animal.y+20*s); cycleCtx.lineTo(positions.bacteria.x+20*s, positions.bacteria.y); cycleCtx.stroke();
+    cycleCtx.beginPath(); cycleCtx.moveTo(positions.bacteria.x, positions.bacteria.y-20*s); cycleCtx.lineTo(positions.soil.x-30*s, positions.soil.y); cycleCtx.stroke();
+
+    cycleCtx.setLineDash([]);
+}
+
+function animateCycle() {
+    const cycleTab = document.getElementById('tab-cycle');
+    if (!cycleTab || cycleTab.classList.contains('hidden')) {
+        cycleAnimId = null;
+        return;
+    }
+    frame++;
+    cycleCtx.clearRect(0, 0, cWidth, cHeight);
+    drawBackground();
+    drawConnections();
+    drawPlant();
+    drawAnimal();
+    drawBacteria();
+    particles.forEach(p => { p.update(); p.draw(); });
+    if (!isPlaying) {
+        particles.forEach(p => {
+            p.alpha -= 0.05;
+            if (p.alpha <= 0) p.visible = false;
+        });
+    }
+    cycleAnimId = requestAnimationFrame(animateCycle);
+}
+
+function startAnimation() {
+    if (isPlaying) return;
+    isPlaying = true;
+    document.getElementById('play-btn').disabled = true;
+    particles = [];
+    for (let i = 0; i < 20; i++) {
+        let p = new Particle();
+        p.stage = Math.floor(Math.random() * 6);
+        p.x = positions.cloud.x;
+        p.y = positions.cloud.y;
+        p.setTarget();
+        p.alpha = 1;
+        particles.push(p);
+    }
+    updateCycleInfo('soil');
+}
+
+function resetScene() {
+    isPlaying = false;
+    document.getElementById('play-btn').disabled = false;
+    particles = [];
+    document.getElementById('info-title').innerText = "راهنما";
+    document.getElementById('info-text').innerText = "روی دکمه «شروع چرخه» کلیک کنید تا ذرات نیتروژن شروع به حرکت کنند. همچنین می‌توانید روی بخش‌های مختلف صحنه کلیک کنید.";
+}
+
+function updateCycleInfo(key) {
+    const data = infoData[key];
+    if (data) {
+        document.getElementById('info-title').innerText = data.title;
+        document.getElementById('info-text').innerText = data.text;
+    }
+}
+
+cycleCanvas.addEventListener('click', (e) => {
+    const rect = cycleCanvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const s = scaleFactor;
+    const dist = (x1,y1,x2,y2) => Math.sqrt((x1-x2)**2 + (y1-y2)**2);
+
+    if (dist(mouseX, mouseY, positions.cloud.x, positions.cloud.y) < 60*s) updateCycleInfo('lightning');
+    else if (dist(mouseX, mouseY, positions.soil.x, positions.soil.y) < 60*s) updateCycleInfo('soil');
+    else if (dist(mouseX, mouseY, positions.plant.x, positions.plant.y) < 50*s) updateCycleInfo('plant');
+    else if (dist(mouseX, mouseY, positions.animal.x, positions.animal.y) < 50*s) updateCycleInfo('animal');
+    else if (dist(mouseX, mouseY, positions.bacteria.x, positions.bacteria.y) < 50*s) updateCycleInfo('bacteria');
+});
+
+window.addEventListener('resize', () => {
+    const cycleTab = document.getElementById('tab-cycle');
+    if (cycleTab && !cycleTab.classList.contains('hidden')) {
+        resizeCycleCanvas();
+    }
+});
+
+/* ==================== شروع ==================== */
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        resizeCycleCanvas();
+        animateCycle();
+    }, 100);
+});
+</script>
+</body>
+</html>
