@@ -10,18 +10,93 @@
          background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); padding:20px;
          padding-bottom: 80px; }
   .container { background:#fff; padding:40px 35px; border-radius:15px;
-               box-shadow:0 15px 40px rgba(0,0,0,0.5); width:900px; max-width:100%; }
+               box-shadow:0 15px 40px rgba(0,0,0,0.5); width:460px; max-width:100%; }
+  h2 { text-align:center; color:#1e3c72; margin-bottom:25px; font-size:22px; }
+  .input-group { margin-bottom:15px; }
+  .input-group label { display:block; margin-bottom:6px; color:#444; font-size:14px; }
+  .input-group input, .input-group textarea, .input-group select {
+                       width:100%; padding:12px; border:2px solid #ddd;
+                       border-radius:8px; font-size:15px; }
+  .input-group input, .input-group textarea { direction:ltr; text-align:left; font-family:monospace; }
+  .input-group input:focus, .input-group textarea:focus { outline:none; border-color:#2a5298; }
+  .btn { width:100%; padding:12px; background:linear-gradient(135deg,#1e3c72,#2a5298);
+         color:#fff; border:none; border-radius:8px; font-size:16px; cursor:pointer;
+         margin-top:10px; transition:0.3s; font-family:inherit; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(30,60,114,0.4); }
+  .btn-green { background:linear-gradient(135deg,#11998e,#38ef7d); }
+  .btn-red { background:linear-gradient(135deg,#c0392b,#e74c3c); }
+  .btn-purple { background:linear-gradient(135deg,#8e44ad,#9b59b6); }
+  .btn-sm { width:auto; padding:6px 12px; font-size:12px; margin:0; }
+  .btn-paste { width:auto; padding:0 14px; margin:0; font-size:18px; border-radius:8px;
+               background:linear-gradient(135deg,#f39c12,#e67e22); color:#fff;
+               border:none; cursor:pointer; transition:0.2s; }
+  .btn-paste:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(243,156,18,0.4); }
+  .input-with-btn { display:flex; gap:6px; align-items:stretch; }
+  .input-with-btn input { flex:1; }
+  .link { text-align:center; margin-top:15px; font-size:13px; color:#666;
+          cursor:pointer; text-decoration:underline; }
+  .msg { text-align:center; margin-top:12px; font-size:13px; min-height:18px; line-height:1.6; }
+  .msg.error { color:#e74c3c; }
+  .msg.success { color:#27ae60; }
+  .msg.info { color:#2a5298; }
+  .hidden { display:none !important; }
+  .admin-panel { width:900px; max-width:100%; }
+  .user-panel { width:900px; max-width:100%; }
+  .header { display:flex; justify-content:space-between; align-items:center;
+            margin-bottom:20px; border-bottom:2px solid #eee; padding-bottom:15px; gap:10px;
+            flex-wrap:wrap; }
+  .header h2 { margin:0; font-size:20px; }
+  .section-title { margin:20px 0 10px; color:#333; font-size:15px;
+                   border-right:3px solid #2a5298; padding-right:10px; }
+  .toggle-type { display:flex; gap:10px; margin:15px 0; justify-content:center; flex-wrap:wrap; }
+  .toggle-type label { padding:8px 16px; border:2px solid #ddd; border-radius:8px;
+                       cursor:pointer; font-size:14px; transition:0.2s; }
+  .toggle-type input { display:none; }
+  .toggle-type label:has(input:checked) { background:#2a5298; border-color:#2a5298; color:#fff; }
+  .toggle-type label:nth-child(2):has(input:checked) {
+                       background:linear-gradient(135deg,#11998e,#38ef7d);
+                       border-color:#11998e; color:#fff; }
+  .toggle-type label:nth-child(3):has(input:checked) {
+                       background:linear-gradient(135deg,#8e44ad,#9b59b6);
+                       border-color:#8e44ad; color:#fff; }
+  .item { background:#f7f9fc; padding:12px 15px; border-radius:8px;
+          margin-bottom:10px; display:flex; justify-content:space-between;
+          align-items:center; font-size:13px; border-left:4px solid #2a5298;
+          direction:ltr; text-align:left; gap:10px; flex-wrap:wrap; }
+  .item.used { border-left-color:#e74c3c; opacity:0.85; }
+  .code { font-family:monospace; font-weight:bold; color:#1e3c72; font-size:14px; }
+  .type { background:#2a5298; color:#fff; padding:3px 8px; border-radius:5px; font-size:11px; }
+  .type.unlimited { background:#27ae60; }
+  .type.nohwid { background:linear-gradient(135deg,#8e44ad,#9b59b6); }
+  .tabs { display:flex; gap:5px; margin-bottom:15px; border-bottom:2px solid #eee; flex-wrap:wrap; }
+  .tab { padding:10px 15px; cursor:pointer; font-size:14px; color:#666;
+         border-bottom:3px solid transparent; }
+  .tab.active { color:#1e3c72; border-bottom-color:#1e3c72; font-weight:bold; }
+  .empty { text-align:center; color:#999; padding:20px; font-size:13px; }
+  .row-actions { display:flex; gap:6px; flex-wrap:wrap; }
+  .note { font-size:12px; color:#888; text-align:center; margin-top:15px; line-height:1.8; }
+  .security-badge { display:inline-block; background:#27ae60; color:#fff;
+                    padding:3px 8px; border-radius:5px; font-size:10px; margin:0 3px; }
+  .warning { background:#f8d7da; border:2px solid #dc3545; padding:12px;
+             border-radius:8px; font-size:13px; color:#721c24; line-height:1.8;
+             margin:10px 0; }
+  .info-box { background:#d1ecf1; border:2px solid #17a2b8; padding:12px;
+              border-radius:8px; font-size:13px; color:#0c5460; line-height:1.8;
+              margin:10px 0; }
+  .step-badge { display:inline-block; background:#1e3c72; color:#fff;
+                padding:3px 10px; border-radius:20px; font-size:11px; margin-bottom:10px; }
+  .loading { text-align:center; color:#2a5298; font-size:13px; padding:20px; }
 
-  /* ==================== نوار تب ==================== */
+  /* ==================== نوار تب کاربر ==================== */
   .user-nav {
     display: flex; gap: 8px; margin-bottom: 20px;
     background: #f3f4f6; padding: 6px; border-radius: 12px;
     flex-wrap: wrap;
   }
   .user-nav button {
-    flex: 1; min-width: 140px; padding: 12px 16px;
+    flex: 1; min-width: 140px; padding: 10px 16px;
     background: transparent; border: none; border-radius: 8px;
-    font-size: 15px; font-weight: bold; cursor: pointer;
+    font-size: 14px; font-weight: bold; cursor: pointer;
     color: #4b5563; transition: 0.2s;
     font-family: inherit;
   }
@@ -133,13 +208,24 @@
   }
 
   @media (max-width: 480px) {
+    .header h2 { font-size: 16px; }
     .cycle-ui-panel p { font-size: 0.82rem; line-height: 1.7; }
     .polymer-card { padding: 14px 15px; }
     .polymer-title { font-size: 15px; }
     .polymer-section-text { font-size: 12.5px; }
-    .user-nav button { font-size: 13px; padding: 10px 10px; min-width: 100px; }
-    .container { padding: 20px 15px; }
+    .user-nav button { font-size: 12px; padding: 8px 10px; min-width: 100px; }
   }
+
+  /* ==================== هشدار DevTools ==================== */
+  .devtools-warning {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 32, 39, 0.98); color: #fff; z-index: 99999;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 30px; font-size: 18px; line-height: 2;
+  }
+  .devtools-warning.show { display: flex; flex-direction: column; }
+  .devtools-warning h2 { color: #e74c3c; margin-bottom: 20px; font-size: 24px; }
 
   /* ==================== فوتر سازنده ==================== */
   .creator-footer {
@@ -196,11 +282,78 @@
 </head>
 <body>
 
-<div class="container" id="mainPage">
+<!-- ============ هشدار DevTools ============ -->
+<div class="devtools-warning" id="devtoolsWarning">
+  <h2>⛔ دسترسی مسدود شد</h2>
+  <p>لطفاً ابزار توسعه‌دهنده (DevTools) را ببندید.</p>
+  <p style="font-size:14px;opacity:0.8;margin-top:10px;">سپس صفحه را رفرش کنید.</p>
+</div>
+
+<!-- ============ لودینگ ============ -->
+<div class="container" id="loadingPage">
+  <div class="loading">⏳ در حال اتصال به سرور...</div>
+</div>
+
+<!-- ============ ادمین ۱ ============ -->
+<div class="container hidden" id="adminStep1Page">
+  <div style="text-align:center;"><span class="step-badge">مرحله ۱ از ۲</span></div>
+  <h2>👑 ورود ادمین</h2>
+  <div class="input-group"><label>رمز ادمین</label>
+    <input type="password" id="adminPasswordInput" placeholder="Admin Password" autocomplete="off"></div>
+  <button class="btn btn-red" onclick="doAdminStep1()">ادامه ➡️</button>
+  <div class="msg" id="adminStep1Msg"></div>
+  <div class="link" onclick="showPage('userPage')">بازگشت به پنل کاربر</div>
+</div>
+
+<!-- ============ ادمین ۲ ============ -->
+<div class="container hidden" id="adminStep2Page">
+  <div style="text-align:center;"><span class="step-badge">مرحله ۲ از ۲</span></div>
+  <h2>🔑 Master Password</h2>
+  <div class="input-group"><label>Master Password</label>
+    <input type="password" id="masterPasswordInput" placeholder="Master Password..." autocomplete="off"></div>
+  <button class="btn btn-green" onclick="doAdminStep2()">🔓 باز کردن پنل</button>
+  <div class="msg" id="adminStep2Msg"></div>
+  <div class="link" onclick="showPage('adminStep1Page')">بازگشت</div>
+</div>
+
+<!-- ============ راه‌اندازی اولیه ============ -->
+<div class="container hidden" id="setupPage">
+  <h2>🎉 راه‌اندازی اولیه</h2>
+  <div class="warning">
+    ⚠️ <b>هشدار مهم:</b> این دو رمز رو <b>جای امن</b> نگه دار.<br>
+    اگه Master Password رو گم کنی، داده‌ها از دست می‌رن!
+  </div>
+
+  <div class="section-title">👑 رمز ادمین</div>
+  <div class="input-group"><label>رمز ادمین (حداقل ۸ کاراکتر)</label>
+    <input type="password" id="setupAdminPass1" placeholder="..."></div>
+  <div class="input-group"><label>تکرار</label>
+    <input type="password" id="setupAdminPass2" placeholder="..."></div>
+
+  <div class="section-title">🔑 Master Password</div>
+  <div class="input-group"><label>Master Password (حداقل ۱۲ کاراکتر)</label>
+    <input type="password" id="setupMasterPass1" placeholder="..."></div>
+  <div class="input-group"><label>تکرار</label>
+    <input type="password" id="setupMasterPass2" placeholder="..."></div>
+
+  <button class="btn btn-green" onclick="doSetup()">✨ راه‌اندازی</button>
+  <div class="msg" id="setupMsg"></div>
+</div>
+
+<!-- ============ صفحه اصلی کاربر (تب‌دار) ============ -->
+<div class="container user-panel hidden" id="userPage">
+  <div class="header">
+    <h2>👤 پنل کاربر</h2>
+    <div style="display:flex; gap:6px;">
+      <button class="btn btn-sm" onclick="showPage('adminStep1Page')">👑 ادمین</button>
+      <button class="btn btn-red btn-sm" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
   <!-- نوار تب -->
   <div class="user-nav">
-    <button class="active" data-tab="cycle" onclick="switchTab('cycle')">🌍 چرخه نیتروژن</button>
-    <button data-tab="polymer" onclick="switchTab('polymer')">♻️ پلیمرها</button>
+    <button class="active" data-tab="cycle" onclick="switchUserTab('cycle')">🌍 چرخه نیتروژن</button>
+    <button data-tab="polymer" onclick="switchUserTab('polymer')">♻️ پلیمرها</button>
   </div>
 
   <!-- ============ تب چرخه نیتروژن ============ -->
@@ -363,6 +516,67 @@
   </div>
 </div>
 
+<!-- ============ پنل ادمین ============ -->
+<div class="container admin-panel hidden" id="adminPage">
+  <div class="header">
+    <h2>👑 پنل ادمین</h2>
+    <button class="btn btn-red btn-sm" onclick="logout()">خروج</button>
+  </div>
+  <div class="tabs">
+    <div class="tab active" data-tab="licenses" onclick="switchTab('licenses')">لایسنس‌ها</div>
+    <div class="tab" data-tab="users" onclick="switchTab('users')">کاربران</div>
+    <div class="tab" data-tab="security" onclick="switchTab('security')">امنیت</div>
+  </div>
+
+  <div id="tab-licenses">
+    <div class="section-title">تولید لایسنس</div>
+    <div class="toggle-type">
+      <label><input type="radio" name="licType" value="single" checked><span>🎫 تک‌کاربره</span></label>
+      <label><input type="radio" name="licType" value="unlimited"><span>♾️ نامحدود</span></label>
+      <label><input type="radio" name="licType" value="nohwid"><span>🆓 HWID نامحدود</span></label>
+    </div>
+    <div class="info-box" style="font-size:12px;">
+      <b>راهنما:</b><br>
+      • <b>🎫 تک‌کاربره:</b> فقط ۱ نفر، ۱ دستگاه<br>
+      • <b>♾️ نامحدود:</b> بی‌نهایت نفر، ولی هر نفر ۱ دستگاه<br>
+      • <b>🆓 HWID نامحدود:</b> بی‌نهایت نفر، هر نفر روی هر تعداد دستگاه
+    </div>
+    <button class="btn btn-green" onclick="generateLicense()">➕ تولید لایسنس</button>
+    <div class="msg" id="adminMsg"></div>
+    <div class="section-title">لیست لایسنس‌ها</div>
+    <div id="licenseList"></div>
+  </div>
+
+  <div id="tab-users" class="hidden">
+    <div class="section-title">لیست کاربران</div>
+    <div class="info-box">🛡️ پسوردها Hash شدن — غیرقابل مشاهده</div>
+    <div id="userList"></div>
+  </div>
+
+  <div id="tab-security" class="hidden">
+    <div class="section-title">وضعیت امنیتی</div>
+    <div class="item" style="border-left-color:#27ae60;">
+      <div><div style="font-weight:bold;color:#1e3c72;">☁️ JSONBin Cloud</div>
+      <div style="font-size:12px;color:#666;margin-top:4px;">داده‌ها روی سرور آنلاین</div></div>
+      <span class="type unlimited">فعال</span>
+    </div>
+    <div class="item" style="border-left-color:#27ae60;">
+      <div><div style="font-weight:bold;color:#1e3c72;">🛡️ Hash پسورد کاربران</div>
+      <div style="font-size:12px;color:#666;margin-top:4px;">PBKDF2 (۱۰۰,۰۰۰ تکرار)</div></div>
+      <span class="type unlimited">امن</span>
+    </div>
+    <div class="section-title">تغییر رمز ادمین</div>
+    <div class="input-group"><label>رمز فعلی</label>
+      <input type="password" id="oldAdminPass"></div>
+    <div class="input-group"><label>رمز جدید</label>
+      <input type="password" id="newAdminPass1"></div>
+    <div class="input-group"><label>تکرار</label>
+      <input type="password" id="newAdminPass2"></div>
+    <button class="btn btn-red" onclick="changeAdminPassword()">🔁 تغییر</button>
+    <div class="msg" id="changePassMsg"></div>
+  </div>
+</div>
+
 <!-- ============ فوتر سازنده ============ -->
 <footer class="creator-footer">
   <span class="label">✨ طراحی و توسعه توسط</span>
@@ -371,8 +585,668 @@
 </footer>
 
 <script>
-/* ==================== نوار تب ==================== */
-function switchTab(tabName) {
+/* ============================================================
+   🛡️ محافظت از کد
+   ============================================================ */
+(function protectCode() {
+  function isPasteMode() { return window.__PASTE_MODE__ === true; }
+  function insidePasteDialog(e) {
+    let el = e.target;
+    while (el) {
+      if (el.id === 'pasteDialog') return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
+
+  document.addEventListener('contextmenu', e => {
+    if (isPasteMode() || insidePasteDialog(e)) return true;
+    e.preventDefault();
+    return false;
+  }, true);
+
+  document.addEventListener('keydown', e => {
+    if (isPasteMode()) return true;
+    const key = (e.key || '').toLowerCase();
+    if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey && e.shiftKey && ['i','j','c','k'].includes(key)) { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey && key === 'u') { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey && key === 's') { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey && key === 'p') { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.ctrlKey && e.shiftKey && ['e','m','p','h','w'].includes(key)) { e.preventDefault(); e.stopPropagation(); return false; }
+    if (e.shiftKey && e.key === 'F10') { e.preventDefault(); e.stopPropagation(); return false; }
+    return true;
+  }, true);
+
+  document.addEventListener('dragstart', e => {
+    if (isPasteMode()) return true;
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag !== 'input' && tag !== 'textarea') e.preventDefault();
+  });
+  document.addEventListener('drop', e => {
+    if (isPasteMode()) return true;
+    e.preventDefault();
+  });
+  document.addEventListener('wheel', e => {
+    if (isPasteMode()) return true;
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+
+  let devtoolsOpen = false;
+  const warning = document.getElementById('devtoolsWarning');
+
+  function checkDevTools() {
+    const threshold = 160;
+    const widthDiff  = window.outerWidth  - window.innerWidth;
+    const heightDiff = window.outerHeight - window.innerHeight;
+    const isOpen = widthDiff > threshold || heightDiff > threshold;
+    if (isOpen !== devtoolsOpen) {
+      devtoolsOpen = isOpen;
+      if (warning) warning.classList.toggle('show', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+  }
+  setInterval(checkDevTools, 1000);
+  setInterval(() => { try { if (devtoolsOpen) console.clear(); } catch (e) {} }, 1000);
+
+  console.log('%c⛔ توقف!', 'color:red;font-size:40px;font-weight:bold;');
+  console.log('%cاین کنسول برای توسعه‌دهنده‌هاست.', 'color:red;font-size:16px;');
+})();
+
+/* ============================================================
+   📋 چسباندن لایسنس
+   ============================================================ */
+const IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+async function pasteLicense() {
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim()) {
+        document.getElementById('regLicense').value = text.trim();
+        return;
+      }
+    }
+  } catch (e) {}
+  try {
+    const input = document.getElementById('regLicense');
+    input.focus();
+    input.select();
+    const ok = document.execCommand('paste');
+    if (ok && input.value.trim()) return;
+  } catch (e) {}
+  showPasteDialog();
+}
+
+function showPasteDialog() {
+  const old = document.getElementById('pasteDialog');
+  if (old) old.remove();
+  window.__PASTE_MODE__ = true;
+
+  const dialog = document.createElement('div');
+  dialog.id = 'pasteDialog';
+  dialog.setAttribute('oncontextmenu', 'return true;');
+  dialog.style.cssText = `
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.75); z-index: 100000;
+    display: flex; justify-content: center; align-items: center;
+    padding: 20px; direction: rtl; font-family: Tahoma, sans-serif;
+  `;
+
+  dialog.innerHTML = `
+    <div style="background:#fff; border-radius:15px; padding:25px; width:100%;
+                max-width:420px; box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+      <h3 style="color:#1e3c72; margin-bottom:12px; text-align:center; font-size:17px;">
+        📋 چسباندن کد لایسنس
+      </h3>
+      <p style="font-size:13px; color:#666; text-align:center; margin-bottom:12px; line-height:1.8;">
+        کد لایسنس رو در کادر زیر <b>نگه دار و Paste کن</b>
+      </p>
+      <textarea id="pasteDialogInput" placeholder="XXXX-XXXX-XXXX-XXXX"
+        oncontextmenu="return true;"
+        style="width:100%; min-height:90px; padding:14px; border:2px solid #7c3aed;
+               border-radius:10px; font-family:monospace; font-size:16px;
+               direction:ltr; text-align:center; resize:vertical;
+               -webkit-user-select:text !important; user-select:text !important;
+               -webkit-touch-callout:default !important;
+               background:#f9fafb; letter-spacing:1px; outline:none;"></textarea>
+      <div style="text-align:center; margin-top:8px;">
+        <button onclick="tryReadClipboard()" 
+          style="width:100%; padding:10px; background:linear-gradient(135deg,#f39c12,#e67e22);
+                 color:#fff; border:none; border-radius:8px; font-size:13px;
+                 cursor:pointer; font-weight:bold;">
+          📋 خوندن مستقیم از کلیپ‌بورد
+        </button>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button onclick="confirmPasteDialog()" 
+          style="flex:1; padding:12px; background:linear-gradient(135deg,#11998e,#38ef7d);
+                 color:#fff; border:none; border-radius:8px; font-size:15px;
+                 cursor:pointer; font-weight:bold;">✅ تأیید</button>
+        <button onclick="closePasteDialog()" 
+          style="flex:1; padding:12px; background:linear-gradient(135deg,#c0392b,#e74c3c);
+                 color:#fff; border:none; border-radius:8px; font-size:15px;
+                 cursor:pointer; font-weight:bold;">✖ لغو</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(dialog);
+
+  const ta = document.getElementById('pasteDialogInput');
+  if (ta) {
+    ['contextmenu', 'mousedown', 'touchstart', 'touchend', 'selectstart', 'longpress', 'pointerdown']
+      .forEach(ev => { ta.addEventListener(ev, e => { e.stopPropagation(); }, true); });
+    setTimeout(() => { ta.focus(); try { ta.click(); } catch(e) {} }, 150);
+  }
+}
+
+function closePasteDialog() {
+  window.__PASTE_MODE__ = false;
+  const dialog = document.getElementById('pasteDialog');
+  if (dialog) dialog.remove();
+}
+
+function confirmPasteDialog() {
+  const ta = document.getElementById('pasteDialogInput');
+  if (!ta) return;
+  const text = (ta.value || '').trim();
+  if (!text) { alert('چیزی وارد نکردی!'); return; }
+  document.getElementById('regLicense').value = text;
+  closePasteDialog();
+}
+
+async function tryReadClipboard() {
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.readText) {
+      alert('مرورگر تو از خوندن مستقیم کلیپ‌بورد پشتیبانی نمی‌کنه.');
+      return;
+    }
+    const text = await navigator.clipboard.readText();
+    if (text && text.trim()) {
+      document.getElementById('pasteDialogInput').value = text.trim();
+    } else {
+      alert('کلیپ‌بورد خالیه');
+    }
+  } catch (e) {
+    alert('مرورگر اجازه نداد. لطفاً کد رو دستی paste کن.');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (IS_MOBILE) {
+    const btn = document.getElementById('pasteBtn');
+    if (btn) { btn.textContent = '📝'; btn.title = 'چسباندن دستی'; }
+  }
+});
+
+/* ============================================================
+   ⚙️ تنظیمات JSONBin
+   ============================================================ */
+const JSONBIN_BIN_ID = '6ab658b5ffd5d160532d9b41';
+const JSONBIN_ACCESS_KEY = '$2a$10$ZKPo3X2psjYHYCAsEEkUIOCF3puu3r5Spqde/1YJOAZCy4FmaBUbq';
+
+let CURRENT_APP_KEY = null;
+let CURRENT_DATA = null;
+let CURRENT_USERNAME = null;
+
+/* ==================== رمزنگاری ==================== */
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey(
+    'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveBits', 'deriveKey']
+  );
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 200000, hash: 'SHA-256' },
+    baseKey, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+  );
+}
+function bufToBase64(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+function base64ToBuf(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes.buffer;
+}
+function randomBytes(n) { return crypto.getRandomValues(new Uint8Array(n)); }
+
+async function encrypt(data, key) {
+  const salt = randomBytes(16);
+  const iv = randomBytes(12);
+  const derived = await deriveKey(key, salt);
+  const plaintext = new TextEncoder().encode(JSON.stringify(data));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, derived, plaintext);
+  return JSON.stringify({ v: 3, salt: bufToBase64(salt), iv: bufToBase64(iv), ct: bufToBase64(ct) });
+}
+async function decrypt(encryptedStr, key) {
+  const { salt, iv, ct } = JSON.parse(encryptedStr);
+  const derived = await deriveKey(key, base64ToBuf(salt));
+  const plaintext = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: base64ToBuf(iv) }, derived, base64ToBuf(ct)
+  );
+  return JSON.parse(new TextDecoder().decode(plaintext));
+}
+
+/* ==================== Hash ==================== */
+async function hashPassword(password) {
+  const salt = randomBytes(16);
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey(
+    'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
+  );
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+    baseKey, 256
+  );
+  return bufToBase64(salt) + ':' + bufToBase64(bits);
+}
+async function verifyPassword(password, stored) {
+  try {
+    const [saltB64, hashB64] = stored.split(':');
+    const salt = new Uint8Array(base64ToBuf(saltB64));
+    const enc = new TextEncoder();
+    const baseKey = await crypto.subtle.importKey(
+      'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
+    );
+    const bits = await crypto.subtle.deriveBits(
+      { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+      baseKey, 256
+    );
+    return bufToBase64(bits) === hashB64;
+  } catch { return false; }
+}
+
+/* ==================== HWID ==================== */
+async function getHWID() {
+  const parts = [
+    navigator.userAgent, navigator.language, navigator.platform,
+    screen.width + 'x' + screen.height, screen.colorDepth,
+    new Date().getTimezoneOffset(), navigator.hardwareConcurrency || 0,
+    navigator.deviceMemory || 0
+  ];
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#f60'; ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = '#069'; ctx.fillText('HWID-fingerprint', 2, 15);
+    ctx.fillStyle = 'rgba(102,204,0,0.7)'; ctx.fillText('HWID-fingerprint', 4, 17);
+    parts.push(canvas.toDataURL().slice(-100));
+  } catch {}
+  try {
+    const gl = document.createElement('canvas').getContext('webgl');
+    const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    if (dbg) {
+      parts.push(gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL));
+      parts.push(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
+    }
+  } catch {}
+  const raw = parts.join('|');
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+/* ==================== JSONBin ==================== */
+async function cloudLoad() {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+      method: 'GET',
+      headers: { 'X-Access-Key': JSONBIN_ACCESS_KEY }
+    });
+    if (!res.ok) throw new Error('Load failed');
+    const result = await res.json();
+    return result.record || { users: [], licenses: [], encAppKey: null, adminHash: null };
+  } catch (e) {
+    console.error('Cloud load error:', e);
+    return null;
+  }
+}
+
+async function cloudSave(data) {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Key': JSONBIN_ACCESS_KEY
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Save failed');
+    return true;
+  } catch (e) {
+    console.error('Cloud save error:', e);
+    return false;
+  }
+}
+
+function makeRandomKey() {
+  const bytes = randomBytes(32);
+  return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+let CLOUD_DATA = null;
+
+async function loadCloudData() {
+  CLOUD_DATA = await cloudLoad();
+  return CLOUD_DATA;
+}
+
+async function saveCloudData() {
+  return await cloudSave(CLOUD_DATA);
+}
+
+/* ==================== UI ==================== */
+function setMsg(id, text, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'msg ' + (type || '');
+}
+function showPage(id) {
+  ['loadingPage','registerPage','userPage','adminPage',
+   'adminStep1Page','adminStep2Page','setupPage']
+    .forEach(p => {
+      const el = document.getElementById(p);
+      if (el) el.classList.add('hidden');
+    });
+  document.getElementById(id).classList.remove('hidden');
+}
+
+/* ==================== شروع ==================== */
+async function init() {
+  showPage('loadingPage');
+  const data = await loadCloudData();
+  if (!data) {
+    showPage('setupPage');
+    setMsg('setupMsg', '❌ اتصال به سرور برقرار نشد. اینترنت رو چک کن.', 'error');
+    return;
+  }
+  if (!data.encAppKey || !data.adminHash) {
+    showPage('setupPage');
+    return;
+  }
+  // بدون لاگین مستقیم به پنل کاربر برو
+  showPage('userPage');
+  switchUserTab('cycle');
+}
+
+/* ==================== راه‌اندازی ==================== */
+async function doSetup() {
+  const a1 = document.getElementById('setupAdminPass1').value;
+  const a2 = document.getElementById('setupAdminPass2').value;
+  const m1 = document.getElementById('setupMasterPass1').value;
+  const m2 = document.getElementById('setupMasterPass2').value;
+
+  if (!a1 || !a2 || !m1 || !m2) return setMsg('setupMsg', 'همه را پر کن', 'error');
+  if (a1.length < 8) return setMsg('setupMsg', 'رمز ادمین حداقل ۸', 'error');
+  if (a1 !== a2) return setMsg('setupMsg', 'رمزهای ادمین یکسان نیستند', 'error');
+  if (m1.length < 12) return setMsg('setupMsg', 'Master حداقل ۱۲', 'error');
+  if (m1 !== m2) return setMsg('setupMsg', 'Master ها یکسان نیستند', 'error');
+
+  setMsg('setupMsg', 'در حال راه‌اندازی...', 'info');
+  try {
+    const appKey = makeRandomKey();
+    CLOUD_DATA.encAppKey = await encrypt({ appKey }, m1);
+    CLOUD_DATA.adminHash = await hashPassword(a1);
+    CLOUD_DATA.users = [];
+    CLOUD_DATA.licenses = [];
+
+    const ok = await saveCloudData();
+    if (!ok) return setMsg('setupMsg', '❌ خطا در ذخیره روی سرور', 'error');
+
+    setMsg('setupMsg', '✅ راه‌اندازی موفق!', 'success');
+    setTimeout(() => {
+      ['setupAdminPass1','setupAdminPass2','setupMasterPass1','setupMasterPass2']
+        .forEach(id => document.getElementById(id).value = '');
+      setMsg('setupMsg', '', '');
+      showPage('userPage');
+      switchUserTab('cycle');
+    }, 2000);
+  } catch (e) {
+    setMsg('setupMsg', 'خطا: ' + e.message, 'error');
+  }
+}
+
+/* ==================== ادمین ==================== */
+async function doAdminStep1() {
+  const pass = document.getElementById('adminPasswordInput').value;
+  if (!pass) return setMsg('adminStep1Msg', 'رمز را وارد کن', 'error');
+  if (!CLOUD_DATA || !CLOUD_DATA.adminHash) return setMsg('adminStep1Msg', 'ابتدا راه‌اندازی', 'error');
+
+  setMsg('adminStep1Msg', 'در حال بررسی...', 'info');
+  const ok = await verifyPassword(pass, CLOUD_DATA.adminHash);
+  if (!ok) return setMsg('adminStep1Msg', '❌ رمز اشتباه', 'error');
+
+  document.getElementById('adminPasswordInput').value = '';
+  setMsg('adminStep1Msg', '', '');
+  showPage('adminStep2Page');
+}
+
+async function doAdminStep2() {
+  const masterPass = document.getElementById('masterPasswordInput').value;
+  if (!masterPass) return setMsg('adminStep2Msg', 'Master را وارد کن', 'error');
+  if (!CLOUD_DATA.encAppKey) return setMsg('adminStep2Msg', '❌ App Key نیست', 'error');
+
+  setMsg('adminStep2Msg', 'در حال باز کردن...', 'info');
+  try {
+    const { appKey } = await decrypt(CLOUD_DATA.encAppKey, masterPass);
+    CURRENT_APP_KEY = appKey;
+    CURRENT_DATA = { users: CLOUD_DATA.users, licenses: CLOUD_DATA.licenses };
+
+    document.getElementById('masterPasswordInput').value = '';
+    setMsg('adminStep2Msg', '', '');
+    showPage('adminPage');
+    loadLicenses();
+  } catch (e) {
+    setMsg('adminStep2Msg', '❌ Master اشتباه', 'error');
+  }
+}
+
+/* ==================== ثبت‌نام (حذف شده) ==================== */
+
+/* ==================== ادمین ==================== */
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
+  ['licenses','users','security'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('hidden', t !== name);
+  });
+  if (name === 'licenses') loadLicenses();
+  if (name === 'users') loadUsers();
+}
+
+async function generateLicense() {
+  if (!CLOUD_DATA) return;
+  const type = document.querySelector('input[name="licType"]:checked').value;
+  const code = makeCode();
+
+  CLOUD_DATA.licenses = CLOUD_DATA.licenses || [];
+  CLOUD_DATA.licenses.push({
+    id: Date.now(),
+    code, type,
+    usedByList: [],
+    usedBy: null,
+    hwid: null,
+    createdAt: Date.now()
+  });
+
+  const ok = await saveCloudData();
+  if (!ok) return setMsg('adminMsg', '❌ خطا در ذخیره', 'error');
+  setMsg('adminMsg', '✅ ساخته شد: ' + code, 'success');
+  loadLicenses();
+  setTimeout(() => setMsg('adminMsg', '', ''), 3000);
+}
+
+function loadLicenses() {
+  const licenses = CLOUD_DATA?.licenses || [];
+  const list = document.getElementById('licenseList');
+  if (licenses.length === 0) {
+    list.innerHTML = '<div class="empty">هنوز لایسنسی نیست</div>';
+    return;
+  }
+
+  list.innerHTML = licenses.slice().reverse().map(l => {
+    const type = l.type || 'single';
+    const usedList = l.usedByList || (l.usedBy ? [l.usedBy] : []);
+    const isNoHwid = type === 'nohwid';
+    const isSingle = type === 'single';
+
+    let statusHtml = '';
+    if (isSingle) {
+      statusHtml = usedList.length > 0
+        ? `<div style="color:#e74c3c;font-size:11px;margin-top:4px;">استفاده: ${usedList[0]}</div>`
+        : '<div style="color:#27ae60;font-size:11px;margin-top:4px;">آزاد</div>';
+    } else {
+      statusHtml = usedList.length > 0
+        ? `<div style="color:#2a5298;font-size:11px;margin-top:4px;">${usedList.length} کاربر: ${usedList.join(', ')}</div>`
+        : '<div style="color:#27ae60;font-size:11px;margin-top:4px;">آزاد</div>';
+    }
+
+    let typeLabel = '🎫 تک‌کاربره';
+    let typeClass = '';
+    if (isNoHwid) { typeLabel = '🆓 HWID نامحدود'; typeClass = 'nohwid'; }
+    else if (type === 'unlimited') { typeLabel = '♾️ نامحدود'; typeClass = 'unlimited'; }
+
+    return `
+    <div class="item ${usedList.length > 0 && isSingle ? 'used' : ''}">
+      <div>
+        <div class="code">${l.code}</div>
+        ${statusHtml}
+      </div>
+      <div class="row-actions">
+        <span class="type ${typeClass}">${typeLabel}</span>
+        <button class="btn btn-sm" onclick="copyText('${l.code}','adminMsg')">کپی</button>
+        <button class="btn btn-red btn-sm" onclick="deleteLicense(${l.id})">حذف</button>
+      </div>
+    </div>
+  `;
+  }).join('');
+}
+
+function loadUsers() {
+  const users = CLOUD_DATA?.users || [];
+  const list = document.getElementById('userList');
+  if (users.length === 0) {
+    list.innerHTML = '<div class="empty">هنوز کاربری نیست</div>';
+    return;
+  }
+  list.innerHTML = users.slice().reverse().map(u => `
+    <div class="item">
+      <div>
+        <div style="font-weight:bold;color:#1e3c72;font-size:14px;">${u.username}</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">لایسنس: <span class="code">${u.license}</span></div>
+        <div style="font-size:11px;color:#27ae60;margin-top:4px;">🔒 پسورد: Hash شده</div>
+      </div>
+      <div class="row-actions">
+        <button class="btn btn-sm" onclick="resetHwid(${u.id})">ریست HWID</button>
+        <button class="btn btn-red btn-sm" onclick="deleteUser(${u.id})">حذف</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function deleteLicense(id) {
+  if (!confirm('حذف شود؟')) return;
+  CLOUD_DATA.licenses = CLOUD_DATA.licenses.filter(l => l.id !== id);
+  await saveCloudData();
+  loadLicenses();
+}
+
+async function deleteUser(id) {
+  if (!confirm('حذف شود؟')) return;
+  const user = CLOUD_DATA.users.find(u => u.id === id);
+  if (!user) return;
+  CLOUD_DATA.users = CLOUD_DATA.users.filter(u => u.id !== id);
+
+  const lic = CLOUD_DATA.licenses.find(l => l.code === user.license);
+  if (lic) {
+    if (lic.usedByList) {
+      lic.usedByList = lic.usedByList.filter(u => u !== user.username);
+    }
+    if (!lic.type || lic.type === 'single') {
+      lic.usedBy = null;
+      lic.hwid = null;
+    } else {
+      if (!lic.usedByList || lic.usedByList.length === 0) {
+        lic.usedBy = null;
+      } else {
+        lic.usedBy = lic.usedByList[0];
+      }
+    }
+  }
+
+  await saveCloudData();
+  loadUsers();
+}
+
+async function resetHwid(id) {
+  if (!confirm('ریست شود؟')) return;
+  const user = CLOUD_DATA.users.find(u => u.id === id);
+  if (user) {
+    user.hwid = null;
+    await saveCloudData();
+  }
+  loadUsers();
+}
+
+/* ==================== تغییر رمز ادمین ==================== */
+async function changeAdminPassword() {
+  const oldPass = document.getElementById('oldAdminPass').value;
+  const p1 = document.getElementById('newAdminPass1').value;
+  const p2 = document.getElementById('newAdminPass2').value;
+  if (!oldPass || !p1 || !p2) return setMsg('changePassMsg', 'همه را پر کن', 'error');
+  if (p1.length < 8) return setMsg('changePassMsg', 'حداقل ۸', 'error');
+  if (p1 !== p2) return setMsg('changePassMsg', 'یکسان نیستند', 'error');
+  const ok = await verifyPassword(oldPass, CLOUD_DATA.adminHash);
+  if (!ok) return setMsg('changePassMsg', '❌ رمز فعلی اشتباه', 'error');
+  CLOUD_DATA.adminHash = await hashPassword(p1);
+  const saved = await saveCloudData();
+  if (!saved) return setMsg('changePassMsg', '❌ خطا در ذخیره', 'error');
+  ['oldAdminPass','newAdminPass1','newAdminPass2'].forEach(id => document.getElementById(id).value = '');
+  setMsg('changePassMsg', '✅ تغییر کرد', 'success');
+  setTimeout(() => setMsg('changePassMsg', '', ''), 2000);
+}
+
+/* ==================== ابزار ==================== */
+function copyText(text, msgId) {
+  navigator.clipboard.writeText(text);
+  setMsg(msgId, '📋 کپی شد', 'success');
+  setTimeout(() => setMsg(msgId, '', ''), 1500);
+}
+function makeCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const seg = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  return `${seg()}-${seg()}-${seg()}-${seg()}`;
+}
+function logout() {
+  CURRENT_APP_KEY = null;
+  CURRENT_DATA = null;
+  CURRENT_USERNAME = null;
+  isPlaying = false;
+  const btn = document.getElementById('play-btn');
+  if (btn) btn.disabled = false;
+  particles = [];
+
+  switchUserTab('cycle');
+
+  ['adminPasswordInput','masterPasswordInput'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  setMsg('adminStep1Msg', '', '');
+  setMsg('adminStep2Msg', '', '');
+  showPage('userPage');
+  switchUserTab('cycle');
+}
+
+/* ==================== نوار تب کاربر ==================== */
+function switchUserTab(tabName) {
   document.querySelectorAll('.user-nav button').forEach(b => b.classList.remove('active'));
   const activeBtn = document.querySelector(`.user-nav button[data-tab="${tabName}"]`);
   if (activeBtn) activeBtn.classList.add('active');
@@ -394,6 +1268,11 @@ function switchTab(tabName) {
   }
 }
 
+function enterUserPage() {
+  showPage('userPage');
+  switchUserTab('cycle');
+}
+
 /* ============================================================
    🌍 چرخه نیتروژن
    ============================================================ */
@@ -404,6 +1283,8 @@ let cWidth, cHeight, scaleFactor;
 let positions = {};
 
 function resizeCycleCanvas() {
+    const userPage = document.getElementById('userPage');
+    if (!userPage || userPage.classList.contains('hidden')) return;
     const cycleTab = document.getElementById('tab-cycle');
     if (!cycleTab || cycleTab.classList.contains('hidden')) return;
 
@@ -628,8 +1509,10 @@ function drawConnections() {
 }
 
 function animateCycle() {
+    const userPage = document.getElementById('userPage');
     const cycleTab = document.getElementById('tab-cycle');
-    if (!cycleTab || cycleTab.classList.contains('hidden')) {
+    if (!userPage || userPage.classList.contains('hidden') ||
+        !cycleTab || cycleTab.classList.contains('hidden')) {
         cycleAnimId = null;
         return;
     }
@@ -698,19 +1581,16 @@ cycleCanvas.addEventListener('click', (e) => {
 });
 
 window.addEventListener('resize', () => {
+    const userPage = document.getElementById('userPage');
     const cycleTab = document.getElementById('tab-cycle');
-    if (cycleTab && !cycleTab.classList.contains('hidden')) {
+    if (userPage && !userPage.classList.contains('hidden') &&
+        cycleTab && !cycleTab.classList.contains('hidden')) {
         resizeCycleCanvas();
     }
 });
 
 /* ==================== شروع ==================== */
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        resizeCycleCanvas();
-        animateCycle();
-    }, 100);
-});
+init();
 </script>
 </body>
 </html>
